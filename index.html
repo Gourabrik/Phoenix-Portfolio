@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Team Phoenix | Hackathon Portfolio</title>
+<style>
+  /* Reset and base */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body, html {
+    margin: 0; padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #1a1a1a 0%, #36096d 100%);
+    color: #eee;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+  a {
+    color: #f4735c;
+    text-decoration: none;
+    transition: color 0.5s ease;
+  }
+  a:hover {
+    color: #ffb07c;
+  }
+  .container {
+    width: 90%; max-width: 1200px;
+    margin: 0 auto;
+  }
+  header {
+    position: fixed;
+    width: 100%;
+    background: rgba(26, 26, 26, 0.85);
+    padding: 1rem 0;
+    z-index: 1000;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+    backdrop-filter: saturate(180%) blur(10px);
+  }
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  nav .logo {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #ff6f61;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2.5rem;
+  }
+  nav ul li {
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  nav ul li a {
+    position: relative;
+  }
+  /* Nav link underline animation */
+  nav ul li a::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background: #ff6f61;
+    transition: width 0.3s ease;
+    border-radius: 1px;
+  }
+  nav ul li a:hover::after {
+    width: 100%;
+  }
+
+  /* Hero Section */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 1rem;
+    position: relative;
+    overflow: visible;
+  }
+  .hero h1 {
+    font-size: 4rem;
+    font-weight: 900;
+    color: #ff6f61;
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    margin-bottom: 1rem;
+    animation: flamePulse 2.5s infinite alternate ease-in-out;
+  }
+  .hero h2 {
+    font-weight: 600;
+    font-size: 1.8rem;
+    color: #ffb07c;
+    margin-bottom: 2.5rem;
+  }
+  .btn-primary {
+    background: linear-gradient(90deg, #ff6f61, #ffb07c);
+    padding: 0.75rem 2.5rem;
+    border: none;
+    border-radius: 36px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #1a1a1a;
+    cursor: pointer;
+    box-shadow: 0 4px 15px #ff6f61aa;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+  }
+  .btn-primary:hover {
+    box-shadow: 0 6px 20px #ffb07ccc;
+    transform: scale(1.05);
+  }
+
+  /* Phoenix flame svg animation */
+  .flame-container {
+    position: absolute;
+    bottom: 10%;
+    width: 60px;
+    height: 120px;
+    animation: flameMove 4s ease-in-out infinite;
+  }
+
+  @keyframes flamePulse {
+    0% { text-shadow: 0 0 12px #ff6f61, 0 0 24px #ff471a;}
+    100% { text-shadow: 0 0 40px #ffb07c, 0 0 70px #ffb07c;}
+  }
+
+  @keyframes flameMove {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-10px) scale(1.05); }
+  }
+
+  /* Section Styling */
+  section {
+    padding: 6rem 1rem 4rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  section h2 {
+    text-align: center;
+    color: #ffb07c;
+    font-weight: 700;
+    font-size: 2.8rem;
+    letter-spacing: 2px;
+    margin-bottom: 2.5rem;
+  }
+  section p {
+    font-weight: 400;
+    font-size: 1.15rem;
+    max-width: 700px;
+    margin: 0 auto 2rem auto;
+    line-height: 1.6;
+    color: #ddd;
+  }
+
+  /* About Section */
+  #about p {
+    text-align: center;
+  }
+
+  /* Team Members Grid */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+    gap: 2.5rem;
+  }
+
+  .member-card {
+    background: linear-gradient(145deg, #2a0f4d, #3e1771);
+    border-radius: 18px;
+    padding: 1.5rem 1.25rem;
+    box-shadow: 0 0 20px #ff6f61aa;
+    transition: transform 0.3s ease, box-shadow 0.4s ease;
+    text-align: center;
+    color: #fff;
+    cursor: default;
+  }
+  .member-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 12px 30px #ff6f61ee;
+  }
+  .member-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid #ff6f61;
+    margin: 0 auto 1rem auto;
+    object-fit: cover;
+    filter: drop-shadow(0 0 3px #ff6f61bb);
+  }
+  .member-name {
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin-bottom: 0.25rem;
+    color: #ffb07c;
+  }
+  .member-role {
+    font-weight: 500;
+    font-size: 1rem;
+    color: #f0c097;
+    margin-bottom: 0.75rem;
+  }
+  .member-bio {
+    font-size: 0.95rem;
+    color: #ddd;
+    line-height: 1.4;
+    min-height: 60px;
+  }
+
+  /* Projects Grid */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 2rem;
+  }
+  .project-card {
+    background: #2e0066;
+    border-radius: 20px;
+    padding: 1.5rem 1rem 2rem 1rem;
+    box-shadow: 0 0 25px #ff6f61aa;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+    color: #ffd7b5;
+  }
+  .project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 16px 35px #ffb07ccc;
+  }
+  .project-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #ffe1bc;
+  }
+  .project-desc {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #f9d3b6aa;
+  }
+  .project-links {
+    margin-top: 1rem;
+  }
+  .project-link {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    margin-right: 0.7rem;
+    background: #ff6f61;
+    border-radius: 24px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #111;
+    text-transform: uppercase;
+    box-shadow: 0 2px 8px #ff6f61cc;
+    transition: background 0.3s ease;
+  }
+  .project-link:hover {
+    background: #ffb07c;
+  }
+
+  /* Contact Form */
+  #contact form {
+    max-width: 480px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  #contact input, #contact textarea {
+    padding: 0.75rem 1rem;
+    border-radius: 24px;
+    border: none;
+    font-size: 1rem;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+    resize: none;
+    box-shadow: 0 0 10px #ff6f6180 inset;
+    transition: box-shadow 0.3s ease;
+  }
+  #contact input:focus, #contact textarea:focus {
+    box-shadow: 0 0 14px #ffb07ccc inset;
+  }
+  #contact button {
+    margin-top: 1rem;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    background: rgba(26, 26, 26, 0.85);
+    color: #999;
+    font-size: 0.9rem;
+    letter-spacing: 1.2px;
+    border-top: 1px solid #3e1771;
+  }
+  .social-links {
+    margin-bottom: 0.5rem;
+  }
+  .social-links a {
+    margin: 0 0.8rem;
+    font-size: 1.3rem;
+    color: #ff6f61;
+    transition: color 0.3s ease;
+  }
+  .social-links a:hover {
+    color: #ffb07c;
+  }
+
+  /* Scroll reveal animations */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(0.215,0.61,0.355,1);
+  }
+  .fade-up.anim-done {
+    animation-name: fadeUpAnim;
+    animation-duration: 0.9s;
+  }
+  @keyframes fadeUpAnim {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    header nav ul {
+      gap: 1.3rem;
+    }
+    .hero h1 {
+      font-size: 2.8rem;
+    }
+    .hero h2 {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+    .btn-primary {
+      font-size: 1rem;
+      padding: 0.6rem 2rem;
+    }
+    section {
+      padding: 4rem 1rem 3rem 1rem;
+    }
+    .project-card {
+      padding: 1.2rem 0.9rem 1.6rem 0.9rem;
+    }
+  }
+</style>
+<!-- Load Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet" />
+<!-- Social icons SVG inline -->
+</head>
+<body>
+<header>
+  <nav class="container" aria-label="Primary Navigation">
+    <div class="logo" aria-label="Team Phoenix Logo">Team Phoenix</div>
+    <ul role="list">
+      <li><a href="#about" tabindex="0">About</a></li>
+      <li><a href="#team" tabindex="0">Team</a></li>
+      <li><a href="#projects" tabindex="0">Projects</a></li>
+      <li><a href="#contact" tabindex="0">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <section class="hero" role="banner" aria-label="Introduction">
+    <h1 tabindex="0">Team Phoenix</h1>
+    <h2 tabindex="0">Rising from the ashes to innovate together</h2>
+    <button class="btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" aria-label="Contact Team Phoenix">Contact Us</button>
+    
+    <div class="flame-container" aria-hidden="true" style="left: 48%; top: 15%;">
+      <svg width="60" height="120" viewBox="0 0 64 128" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ff6f61" stroke-width="1.5" >
+        <path fill="url(#grad1)" d="M32 120c-12-15-14-29-14-44 0-11 10-30 14-42 4 13 14 31 14 42 0 15-2 29-14 44z"/>
+        <defs>
+          <linearGradient id="grad1" x1="0" y1="0" x2="0" y2="120" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#ff6f61" stop-opacity="0.9"/>
+            <stop offset="1" stop-color="#ffb07c" stop-opacity="0.3"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  </section>
+
+  <section id="about" aria-labelledby="about-title" class="fade-up">
+    <h2 id="about-title">About Team Phoenix</h2>
+    <p>We are an innovative and passionate hackathon team dedicated to creating breakthrough solutions and rising above challenges together. Our spirit embodies creativity, resilience, and boldness — just like the Phoenix.</p>
+  </section>
+
+  <section id="team" aria-labelledby="team-title" class="fade-up">
+    <h2 id="team-title">Meet the Team</h2>
+    <div class="team-grid" role="list">
+      <article class="member-card" role="listitem" tabindex="0" aria-label="Alice Johnson, Team Lead">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEidpitqC2BOAlRVx_VvStMGqqhmttKoztnPtk1BsA7EUS98PMyTTEM2AL7hsfmtNpNaLpq9EGwsEFhagX5aSofb6H1-4vrCdBJB8Ce78ELL6F-AL-rBvcef64q2sq2LE140pc2XjXdXXqZEw4k7pEqyXxpMTWxuJ2h8MYCm5pngXjCjqX1Q7OyJhjKtvSvF/w236-h279/Gourab.jpg" />
+        <p class="member-name">Gourab Biswas</p>
+        <p class="member-role">Team Lead / Ai Prompt Engineer & Researcher</p>
+        <p class="member-bio">Strategic, disciplined, and creative problem solver who loves building full-stack projects.</p>
+      </article>
+      <article class="member-card" role="listitem" tabindex="0" aria-label="Marcus Lee, UI/UX Designer">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh_MtwxqgsRNQO0jO5zAqIytdUuXp48IzzQgT4-5Y81uYlG1gPdwf6-RiNFfeIfs1Lf1ABOOyxpSfTBM7AptAliLbHsIu_bbdpEIjKpld24ozAbvPcUNlrEaETqbdvbRMRhRueJepH5NL_JfHOywRaWGlXTWW68d9xn-ySo48WcQiJmGunESEvYpXJUzUpo/w209-h279/Subham.jpg" />
+        <p class="member-name">Subham Saha</p>
+        <p class="member-role">Full Stack Developer </p>
+        <p class="member-bio">Passionate about user-centric design and seamless interfaces.</p>
+      </article>
+      <article class="member-card" role="listitem" tabindex="0" aria-label="Sofia Martinez, Backend Developer">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEin07gmAN5yG0sHWnvTW8erROQ3YQQ3B9-nAx9AKI1gu9Zr2sgIRXpa6VtApNzwBIY84me_LAIldjRO6xQNHXIRBC7hEAKGvMTmD6m585d1miZ6HTrM5JRUh8tHqHs6VTz2-nzW7Dlae6gVvM1g2pWBWwfJIYmkyn9SbDs3LPqVzevK1zftIL0glP0bUD71/w213-h284/Samprada.jpg" />
+        <p class="member-name">Samprada Dutta</p>
+        <p class="member-role">UI/UX & Frontend Designer</p>
+        <p class="member-bio">Expert on APIs, databases and scalable server-side applications.</p>
+      </article>
+      <article class="member-card" role="listitem" tabindex="0" aria-label="David Kim, Data Scientist">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6yUzdumOJ12VkKQI4pnFEYUY3MkdmGWRmgpf_ZeYG1x7RhTjapj_-dqUWJpTkLUYa5nBu1PJeroUVISQxmR4YII5JqAPuufccaKkMnqDVnC80eYB9y91bS6d8nKWvcek1rGzoAPjuizMh4udaf0LhyphenhyphenmWJT6HDTJ_n_b32pzIW0m0Y5J5LPa54LkQ1Javb/w225-h300/Gopla.jpg" />
+        <p class="member-name">Subhadeep Adhikary</p>
+        <p class="member-role">Researcher & Backend Developer</p>
+        <p class="member-bio">Turning data into insights to empower smarter decisions.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="projects" aria-labelledby="projects-title" class="fade-up">
+    <h2 id="projects-title">Our Projects</h2>
+    <div class="projects-grid">
+
+
+      <article class="project-card" tabindex="0" aria-label="Project Phoenix AI, AI-powered hackathon assistant">
+        <h3 class="project-title">Nutrition Tracking Website</h3>
+        <p class="project-desc">An AI-powered website that helps Students to monitor their health and make it better .</p>
+        <div class="project-links">
+          <a href="#" class="project-link" aria-label="View Phoenix AI GitHub repository" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="#" class="project-link" aria-label="View Phoenix AI demo">Demo</a>
+        </div>
+      </article>
+      
+    </div>
+  </section>
+
+  <section id="contact" aria-labelledby="contact-title" class="fade-up">
+    <h2 id="contact-title">Get in Touch</h2>
+    <form aria-label="Contact form to reach Team Phoenix" onsubmit="return false;">
+      <input type="text" name="name" placeholder="Your Name" aria-label="Your Name" required />
+      <input type="email" name="email" placeholder="Your Email" aria-label="Your Email" required />
+      <textarea name="message" rows="5" placeholder="Your Message" aria-label="Your Message" required></textarea>
+      <button class="btn-primary" type="submit" aria-label="Send Message">Send Message</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <div class="social-links" role="list" aria-label="Social media links">
+    <a href="#" role="listitem" aria-label="Team Phoenix Twitter" target="_blank" rel="noopener noreferrer" title="Twitter" >&#x1F426;</a>
+    <a href="#" role="listitem" aria-label="Team Phoenix LinkedIn" target="_blank" rel="noopener noreferrer" title="LinkedIn">&#128100;</a>
+    <a href="#" role="listitem" aria-label="Team Phoenix GitHub" target="_blank" rel="noopener noreferrer" title="GitHub">&#128187;</a>
+  </div>
+  <p>© 2024 Team Phoenix. All rights reserved.</p>
+</footer>
+
+<script>
+  // Scroll reveal animation for fade-up elements
+  document.addEventListener('DOMContentLoaded', () => {
+    const fadeElems = document.querySelectorAll('.fade-up');
+    const revealOffset = 100;
+
+    function revealOnScroll() {
+      fadeElems.forEach(elem => {
+        const elemTop = elem.getBoundingClientRect().top;
+        if (elemTop < window.innerHeight - revealOffset) {
+          elem.classList.add('anim-done');
+        }
+      });
+    }
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll(); // reveal on page load
+  });
+</script>
+</body>
+</html>
+
